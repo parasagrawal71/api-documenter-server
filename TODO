@@ -1,0 +1,11 @@
+- message service: common message from one place (Body can't be empty)
+- uiMessage field in response format
+- [LATER] test cases for each api and automation testing
+- Implement redis for anything to learn the concept and usage
+- Run memory leak / performance metrics weakly. Generate report / Log
+- rollback methods
+- locks on apis
+- Push logs to elastic search
+- Socket push
+- RENAME apisTree
+- Verify email redirect html page

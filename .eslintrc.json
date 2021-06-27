@@ -1,0 +1,41 @@
+{
+  "extends": ["airbnb", "prettier"],
+  "plugins": ["prettier", "react", "react-hooks"],
+  "env": { "browser": true, "node": true },
+  "globals": {
+    "appLogger": true
+  },
+  "settings": {
+    "import/resolver": {
+      "node": {
+        "paths": ["src"]
+      }
+    }
+  },
+  "rules": {
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ],
+    "react/jsx-filename-extension": [1, { "extensions": [".js", ".jsx"] }],
+    "react/prop-types": 0,
+    "no-console": ["warn"],
+    "react-hooks/exhaustive-deps": "error",
+    "no-use-before-define": "off",
+    "import/prefer-default-export": "off",
+    "jsx-a11y/anchor-is-valid": "off",
+    "arrow-body-style": "off",
+    "no-unused-vars": "warn",
+    "no-nested-ternary": "warn",
+    "react/no-array-index-key": "off",
+    "react/destructuring-assignment": "off",
+    "no-case-declarations": "off",
+    "no-param-reassign": "off",
+    "consistent-return": "off",
+    "no-else-return": "off",
+    "react/jsx-props-no-spreading": "off",
+    "no-underscore-dangle": "off"
+  }
+}
