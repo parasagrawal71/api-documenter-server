@@ -1,10 +1,10 @@
 const passport = require("passport");
 const { OAuth2Client } = require("google-auth-library");
+const path = require("path");
 const { successResponse, errorResponse } = require("../../utils/response.format");
 const { GOOGLE_CLIENT_ID } = require("../../config");
 const UserModel = require("../../models/user.model");
 const { signJwtToken } = require("./_helpers");
-const path = require("path");
 
 const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 
@@ -67,9 +67,9 @@ module.exports.googleLogin = async (req, res, next) => {
 };
 
 /**
- * @description Function to verify email address by otp sent
+ * @description Function to verify new account by pressing verify button on email sent
  */
-module.exports.verifyEmailAdress = async (req, res, next) => {
+module.exports.accountVerification = async (req, res, next) => {
   try {
     const { email, otp } = req.query;
     if (!email || !otp) {
@@ -85,7 +85,7 @@ module.exports.verifyEmailAdress = async (req, res, next) => {
       return errorResponse({
         res,
         statusCode: 400,
-        message: `Email verification failed: User not found`,
+        message: `Account verification failed: User not found`,
         error: user,
       });
     }
@@ -93,13 +93,11 @@ module.exports.verifyEmailAdress = async (req, res, next) => {
     const validate = await user.isValidOtp(otp);
     if (!validate) {
       return res.sendFile(path.join(__dirname, "../../views/verify-email-error.html"));
-      // return errorResponse({ res, statusCode: 400, message: `Email verification failed: Wrong OTP`, error: validate });
     }
 
     user = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: 1 }, $set: { isVerified: true } });
     user.password = undefined;
     return res.sendFile(path.join(__dirname, "../../views/verify-email-success.html"));
-    // return successResponse({ res, message: "Email verified successfully", data: user });
   } catch (error) {
     next(error);
   }

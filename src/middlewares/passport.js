@@ -1,16 +1,16 @@
 const passport = require("passport");
-const localStrategy = require("passport-local").Strategy;
+const LocalStrategy = require("passport-local").Strategy;
 const JWTstrategy = require("passport-jwt").Strategy;
 const ExtractJWT = require("passport-jwt").ExtractJwt;
 const UserModel = require("../models/user.model");
 const { JWT_SECRET } = require("../config");
 const { sendMail } = require("../utils/send-mail");
 const { randomNumbers } = require("../utils/functions");
-const { verifyEmailTemplate } = require("../email-templates/verify-email");
+const { accountVerificationTemplate } = require("../email-templates/account-verification");
 
 passport.use(
   "register",
-  new localStrategy(
+  new LocalStrategy(
     {
       usernameField: "email",
       passwordField: "password",
@@ -19,13 +19,14 @@ passport.use(
       try {
         let user = await UserModel.findOne({ email });
         if (user && user.isVerified) {
-          return done({ message: "Already registered" });
+          return done({ message: "Already registered: Please login to your account", code: "ALREADY_REGISTERED" });
         }
 
         const otp = randomNumbers(4);
-        const _verifyEmailTemplate = verifyEmailTemplate(email, otp);
+        const _accountVerificationTemplate = accountVerificationTemplate(email, otp);
 
         if (user && !user.isVerified) {
+          // TODO: mail didn't have email template
           user = await UserModel.findOneAndUpdate({ email }, { otp });
         }
 
@@ -33,7 +34,11 @@ passport.use(
           user = await UserModel.create({ email, password, otp });
         }
 
-        const sendMailRes = await sendMail({ to: email, subject: "Verify Your Email", html: _verifyEmailTemplate });
+        const sendMailRes = await sendMail({
+          to: email,
+          subject: "Account Verification",
+          html: _accountVerificationTemplate,
+        });
         if (sendMailRes && sendMailRes[0] === false) {
           return done(sendMailRes[1]);
         }
@@ -48,7 +53,7 @@ passport.use(
 
 passport.use(
   "login",
-  new localStrategy(
+  new LocalStrategy(
     {
       usernameField: "email",
       passwordField: "password",

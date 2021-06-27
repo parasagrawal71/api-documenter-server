@@ -1,6 +1,6 @@
 const { HOST_URL } = require("../config");
 
-module.exports.verifyEmailTemplate = (email, OTP) => {
+module.exports.accountVerificationTemplate = (email, OTP) => {
   return `<html lang="en">
   <head>
     <meta charset="UTF-8" />

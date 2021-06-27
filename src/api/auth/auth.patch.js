@@ -5,7 +5,7 @@ const UserModel = require("../../models/user.model");
 const { successResponse, errorResponse } = require("../../utils/response.format");
 const { sendMail } = require("../../utils/send-mail");
 const { randomNumbers } = require("../../utils/functions");
-const { verifyEmailTemplate } = require("../../email-templates/verify-email");
+const { verifyEmailByOtpTemplate } = require("../../email-templates/verify-email-by-otp");
 const { JWT_SECRET } = require("../../config");
 const { signJwtToken } = require("./_helpers");
 
@@ -74,15 +74,52 @@ module.exports.handleForgotPassword = async (req, res, next) => {
     const otp = randomNumbers(4);
     user = await UserModel.findOneAndUpdate({ email }, { otp });
 
-    const _verifyEmailTemplate = verifyEmailTemplate(email, otp);
-    const sendMailRes = await sendMail({ to: email, subject: "Verify Your Email", html: _verifyEmailTemplate });
+    const _verifyEmailByOtpTemplate = verifyEmailByOtpTemplate(otp);
+    const sendMailRes = await sendMail({ to: email, subject: "Verify Your Email", html: _verifyEmailByOtpTemplate });
     if (sendMailRes && sendMailRes[0] === false) {
       return next(sendMailRes[1]);
     }
 
     user.otp = undefined;
     user.password = undefined;
-    return successResponse({ res, message: "OTP resent to your email address successfully", data: user });
+    return successResponse({ res, message: "OTP sent to your email address successfully", data: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @description Function to verify email address by OTP sent on email
+ */
+module.exports.verifyEmailAdress = async (req, res, next) => {
+  try {
+    const { email, otp } = req.query;
+    if (!email || !otp) {
+      return errorResponse({
+        res,
+        statusCode: 400,
+        message: `${!email ? "email" : "otp"} is required`,
+      });
+    }
+
+    let user = await UserModel.findOne({ email });
+    if (!user) {
+      return errorResponse({
+        res,
+        statusCode: 400,
+        message: `Email verification failed: User not found`,
+        error: user,
+      });
+    }
+
+    const validate = await user.isValidOtp(otp);
+    if (!validate) {
+      return errorResponse({ res, statusCode: 400, message: `Email verification failed: Wrong OTP`, error: validate });
+    }
+
+    user = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: 1 } });
+    user.password = undefined;
+    return successResponse({ res, message: "Email verified successfully", data: user });
   } catch (error) {
     next(error);
   }

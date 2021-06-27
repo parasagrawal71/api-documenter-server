@@ -36,7 +36,7 @@ module.exports.deepObject = (obj) => {
 };
 
 module.exports.randomNumbers = (length) => {
-  const multipleOf10s = Math.pow(10, length);
+  const multipleOf10s = 10 ** length;
   const min = multipleOf10s * 0.1;
   const max = multipleOf10s * 0.9;
   return Math.floor(min + Math.random() * max);
