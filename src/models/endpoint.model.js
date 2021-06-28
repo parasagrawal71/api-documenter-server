@@ -49,16 +49,19 @@ const exampleSchema = new Schema(
 );
 
 // MAIN SCHEMA
-const EndpointModel = new Schema({
-  title: { type: String, required: true, unique: true },
-  method: { type: String, required: true },
-  path: { type: String },
-  description: { type: String },
-  parameters: [parameterSchema],
-  requestHeaders: [requestHeaderSchema],
-  examples: [exampleSchema],
-  serviceMID: { type: String, required: true },
-});
+const EndpointModel = new Schema(
+  {
+    title: { type: String, required: true, unique: true },
+    method: { type: String, required: true },
+    path: { type: String },
+    description: { type: String },
+    parameters: [parameterSchema],
+    requestHeaders: [requestHeaderSchema],
+    examples: [exampleSchema],
+    serviceMID: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 EndpointModel.pre("findOneAndUpdate", function (next) {
   this.options.runValidators = true;

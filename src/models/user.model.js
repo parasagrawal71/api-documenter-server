@@ -13,14 +13,17 @@ const editAccessSchema = new Schema(
 );
 
 // MAIN SCHEMA
-const UserModel = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String },
-  isVerified: { type: Boolean, default: false },
-  otp: { type: String },
-  superuser: { type: Boolean, default: false },
-  editAccess: [editAccessSchema],
-});
+const UserModel = new Schema(
+  {
+    email: { type: String, required: true, unique: true },
+    password: { type: String },
+    isVerified: { type: Boolean, default: false },
+    otp: { type: String },
+    superuser: { type: Boolean, default: false },
+    editAccess: [editAccessSchema],
+  },
+  { timestamps: true }
+);
 
 UserModel.pre("findOneAndUpdate", async function (next) {
   this.options.runValidators = true;

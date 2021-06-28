@@ -12,11 +12,14 @@ const variableSchema = new Schema(
 );
 
 // MAIN SCHEMA
-const EnvironmentModel = new Schema({
-  envName: { type: String, required: true, unique: true },
-  variables: [variableSchema],
-  serviceMID: { type: String, required: true },
-});
+const EnvironmentModel = new Schema(
+  {
+    envName: { type: String, required: true, unique: true },
+    variables: [variableSchema],
+    serviceMID: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 EnvironmentModel.pre("findOneAndUpdate", async function (next) {
   this.options.runValidators = true;

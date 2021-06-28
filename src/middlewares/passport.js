@@ -26,7 +26,7 @@ passport.use(
         const _accountVerificationTemplate = accountVerificationTemplate(email, otp);
 
         if (user && !user.isVerified) {
-          // TODO: mail didn't have email template
+          // TODO: mail didn't have email template (Option to resend email in UI)
           user = await UserModel.findOneAndUpdate({ email }, { otp });
         }
 
@@ -67,7 +67,7 @@ passport.use(
         }
 
         if (user && !user.isVerified) {
-          // TODO: SEND MAIL
+          // TODO: SEND MAIL (Option to resend email in UI)
           return done(null, false, { message: "Account not verified", errorCode: "USER_NOT_VERIFIED" });
         }
 
