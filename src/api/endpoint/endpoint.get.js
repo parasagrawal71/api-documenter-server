@@ -22,6 +22,10 @@ module.exports.getEndpointById = (req, res, next) => {
 
   EndpointModel.findOne({ _id: mongoId })
     .then((endpoint) => {
+      if (!endpoint) {
+        return errorResponse({ res, statusCode: 400, message: `Endpoint with id ${mongoId} NOT found` });
+      }
+
       successResponse({ res, message: `Endpoint details for id: ${mongoId}`, data: endpoint });
     })
     .catch(next);

@@ -3,12 +3,23 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
+// SUB-SCHEMAS
+const editAccessSchema = new Schema(
+  {
+    serviceName: { type: String, required: true },
+    serviceMID: { type: String, required: true },
+  },
+  { _id: false }
+);
+
 // MAIN SCHEMA
 const UserModel = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String },
   isVerified: { type: Boolean, default: false },
   otp: { type: String },
+  superuser: { type: Boolean, default: false },
+  editAccess: [editAccessSchema],
 });
 
 UserModel.pre("findOneAndUpdate", async function (next) {

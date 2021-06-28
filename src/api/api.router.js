@@ -8,6 +8,7 @@ const schemaRouter = require("./schema/schema.router");
 const readmeRouter = require("./readme/readme.router");
 const serviceRouter = require("./service/service.router");
 const authRouter = require("./auth/auth.router");
+const userRouter = require("./user/user.router");
 
 const apiRouter = express.Router();
 
@@ -18,5 +19,6 @@ apiRouter.use("/schema", authenticateRequests, schemaRouter);
 apiRouter.use("/readme", authenticateRequests, readmeRouter);
 apiRouter.use("/service", authenticateRequests, serviceRouter);
 apiRouter.use("/auth", authRouter);
+apiRouter.use("/user", authenticateRequests, userRouter);
 
 module.exports = apiRouter;

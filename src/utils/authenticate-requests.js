@@ -37,6 +37,7 @@ module.exports.authenticateRequests = async (req, res, next) => {
       return errorResponse({ res, statusCode: 401, message: "Authentication failed: User not verified" });
     }
 
+    req.loggedInUser = user;
     next();
   } catch (error) {
     next(error);
