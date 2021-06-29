@@ -15,6 +15,7 @@ const editAccessSchema = new Schema(
 // MAIN SCHEMA
 const UserModel = new Schema(
   {
+    name: { type: String },
     email: { type: String, required: true, unique: true },
     password: { type: String },
     isVerified: { type: Boolean, default: false },

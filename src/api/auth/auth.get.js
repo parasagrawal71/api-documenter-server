@@ -27,7 +27,7 @@ module.exports.login = (req, res, next) => {
         if (error) return next(error);
 
         const [token, expiry] = signJwtToken(user);
-        return successResponse({ res, message: "Logged in successfully", data: { token, expiry } });
+        return successResponse({ res, message: "Logged in successfully", data: { token, expiry, user } });
       });
     } catch (error) {
       return next(error);
@@ -52,7 +52,7 @@ module.exports.googleLogin = async (req, res, next) => {
 
       let user = await UserModel.findOne({ email });
       if (!user) {
-        user = await UserModel.create({ email, isVerified: true });
+        user = await UserModel.create({ email, name, isVerified: true });
       }
 
       user.password = undefined;

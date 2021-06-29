@@ -64,7 +64,7 @@ module.exports.accountVerificationTemplate = (email, OTP) => {
         <td class="textAlign">
           <a
             class="verify-btn"
-            href="${HOST_URL}/auth/verify-email?email=${email}&otp=${OTP}"
+            href="${HOST_URL}/auth/account-verification?email=${email}&otp=${OTP}"
             target="_blank"
             >Verify Email</a
           >
