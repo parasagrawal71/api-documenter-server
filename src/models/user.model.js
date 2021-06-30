@@ -9,8 +9,12 @@ const editAccessSchema = new Schema(
     serviceName: { type: String, required: true },
     serviceMID: { type: String, required: true },
   },
-  { _id: false }
+  { _id: false, id: false, toJSON: { virtuals: true } }
 );
+
+editAccessSchema.virtual("_id").get(function () {
+  return this.serviceMID;
+});
 
 // MAIN SCHEMA
 const UserModel = new Schema(
