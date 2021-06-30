@@ -4,17 +4,17 @@ const bcrypt = require("bcrypt");
 const { Schema } = mongoose;
 
 // SUB-SCHEMAS
-const editAccessSchema = new Schema(
-  {
-    serviceName: { type: String, required: true },
-    serviceMID: { type: String, required: true },
-  },
-  { _id: false, id: false, toJSON: { virtuals: true } }
-);
+// const editAccessSchema = new Schema(
+//   {
+//     serviceName: { type: String, required: true },
+//     serviceMID: { type: String, required: true },
+//   },
+//   { _id: false, id: false, toJSON: { virtuals: true } }
+// );
 
-editAccessSchema.virtual("_id").get(function () {
-  return this.serviceMID;
-});
+// editAccessSchema.virtual("_id").get(function () {
+//   return this.serviceMID;
+// });
 
 // MAIN SCHEMA
 const UserModel = new Schema(
@@ -25,7 +25,7 @@ const UserModel = new Schema(
     isVerified: { type: Boolean, default: false },
     otp: { type: String },
     superuser: { type: Boolean, default: false },
-    editAccess: [editAccessSchema],
+    editAccess: [{ type: String }],
   },
   { timestamps: true }
 );
