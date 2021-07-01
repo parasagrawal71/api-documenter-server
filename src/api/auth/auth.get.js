@@ -2,7 +2,7 @@ const passport = require("passport");
 const { OAuth2Client } = require("google-auth-library");
 const path = require("path");
 const { successResponse, errorResponse } = require("../../utils/response.format");
-const { GOOGLE_CLIENT_ID } = require("../../config");
+const { GOOGLE_CLIENT_ID, FRONTEND_URL } = require("../../config");
 const UserModel = require("../../models/user.model");
 const { signJwtToken } = require("./_helpers");
 
@@ -90,14 +90,17 @@ module.exports.accountVerification = async (req, res, next) => {
       });
     }
 
-    const validate = await user.isValidOtp(otp);
+    const [validate, info] = await user.isValidOtp(otp);
     if (!validate) {
-      return res.sendFile(path.join(__dirname, "../../views/verify-email-error.html"));
+      return res.render(path.join(__dirname, "../../views/verify-email-error.html"), { url: FRONTEND_URL, info });
     }
 
     user = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: 1 }, $set: { isVerified: true } });
     user.password = undefined;
-    return res.sendFile(path.join(__dirname, "../../views/verify-email-success.html"));
+    return res.render(path.join(__dirname, "../../views/verify-email-success.html"), {
+      url: FRONTEND_URL,
+      info: "Thank you for verifying your email address",
+    });
   } catch (error) {
     next(error);
   }

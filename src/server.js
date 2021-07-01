@@ -5,6 +5,7 @@ const moment = require("moment");
 const chalk = require("chalk");
 const rTracer = require("cls-rtracer");
 const helmet = require("helmet");
+const path = require("path");
 
 const apiRouter = require("./api/api.router");
 const { logIncomingRequests } = require("./utils/log-requests");
@@ -31,6 +32,8 @@ app.use(
 );
 app.use(rTracer.expressMiddleware());
 app.use(helmet());
+app.set("view engine", "html");
+app.engine("html", require("ejs").renderFile);
 // app.use(
 //   morgan(function (tokens, req, res) {
 //     let statusCode = tokens.status(req, res);

@@ -70,9 +70,19 @@ UserModel.methods.isValidPassword = async function (password) {
 
 UserModel.methods.isValidOtp = async function (otp) {
   const user = this;
-  const comparision = await bcrypt.compare(String(otp), user.otp);
+  let comparision = false;
+  let info = "";
 
-  return comparision;
+  if (user.isVerified) {
+    return [false, "Already verified"];
+  }
+
+  if (otp && user.otp) {
+    comparision = await bcrypt.compare(String(otp), user.otp);
+    return [comparision, !comparision ? "Wrong OTP" : ""];
+  }
+
+  return [comparision, info];
 };
 
 module.exports = mongoose.model("User", UserModel, "users");

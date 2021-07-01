@@ -112,7 +112,7 @@ module.exports.verifyEmailAdress = async (req, res, next) => {
       });
     }
 
-    const validate = await user.isValidOtp(otp);
+    const [validate, info] = await user.isValidOtp(otp);
     if (!validate) {
       return errorResponse({ res, statusCode: 400, message: `Email verification failed: Wrong OTP`, error: validate });
     }
