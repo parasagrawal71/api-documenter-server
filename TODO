@@ -1,11 +1,71 @@
+<<<LOGIN>>>
+
+
+<<<Dashboard>>>
+- Health check status can be added
+
+<<<Users>>>
+- superuser <- Must have atleast one superuser. Last superuser cannot be removed ? or no superuser can remove other superusers
+- assign edit access menu is flickering on selecting options from it
+
+
+<<<Documentation>>>
+- Make "read env variable" dynamic for any number of variables
+- "Add new env" option. APIs for environments - create env, delete env
+- Search box for Table of contents
+- Comment box whenever updated
+- Bug: Two actions popup opening at same time on clicking two more icons
+- Nested fields support in model component
+- When hitting send api request, show a animation where request goes to server from client and later client receives it
+- Other type of request body like form data etc
+- Pre-Populate all possible header values etc- Add request option in APIs subheader ??????
+- Drag files functionality in apis tree sidebar
+- edit names or method functionality in apis tree sidebar
+- Request is going to localhost instead of env host_url
+- Textfieldpopup holding old values
+- Tab not working in request body textarea
+- On send request dropdown arrow, outline not going after saving example
+- CHECK FORM VALIDATION IN ENDPOINT SECTION AND ALL OTHER PAGES EXCEPT LOGIN (change iserror to error)
+- Loaders on every page, login btns
+
+
+<<<UPGRADE IN NEXT PHASE>>> [LATER]
+- Testcases functionality
+- LOGIN with mobile otp
+- test cases for each apis in backend and automation testing
+
+
+<<<Uncategorized>>>
+- Copy to clipboard option
+- "Session expired" popup and logout if token expires
+- toast is stucking
+- favicon
+- in backend email templates, use a variable for APP_NAME
+- Decide Logo and app name for project
+
+
+
+<<<BACKEND Specific / Performance / Improvement>>>
+- RENAME apisTree to folder in backend
 - message service: common message from one place (Body can't be empty)
 - uiMessage field in response format
-- [LATER] test cases for each api and automation testing
 - Implement redis for anything to learn the concept and usage
 - Run memory leak / performance metrics weakly. Generate report / Log
 - rollback methods
 - locks on apis
 - Push logs to elastic search
 - Socket push
-- RENAME apisTree
-- Verify email redirect html page
+
+
+
+
+
+
+
+
+
+
+
+
+
+
