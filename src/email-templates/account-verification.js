@@ -1,6 +1,6 @@
 const { HOST_URL } = require("../config");
 
-module.exports.accountVerificationTemplate = (email, OTP) => {
+module.exports.accountVerificationTemplate = (email, OTP, name) => {
   return `<html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -116,7 +116,7 @@ module.exports.accountVerificationTemplate = (email, OTP) => {
         <td>
           <table class="content-table">
             <tr>
-              <td class="rowPadding10px">Hi ${email}</td>
+              <td class="rowPadding10px">Hi ${name || email}</td>
             </tr>
             <tr>
               <td class="rowPadding5px">

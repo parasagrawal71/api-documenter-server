@@ -6,6 +6,7 @@ const { successResponse, errorResponse } = require("../../utils/response.format"
 const { sendMail } = require("../../utils/send-mail");
 const { randomNumbers } = require("../../utils/functions");
 const { verifyEmailByOtpTemplate } = require("../../email-templates/verify-email-by-otp");
+const { accountVerificationTemplate } = require("../../email-templates/account-verification");
 const { JWT_SECRET } = require("../../config");
 const { signJwtToken } = require("./_helpers");
 
@@ -48,7 +49,7 @@ module.exports.setPassword = async (req, res, next) => {
 };
 
 /**
- * @description Function to handle forgot password
+ * @description Function to handle forgot password (send otp to user's email)
  */
 module.exports.handleForgotPassword = async (req, res, next) => {
   try {
@@ -120,6 +121,60 @@ module.exports.verifyEmailAdress = async (req, res, next) => {
     user = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: 1 } });
     user.password = undefined;
     return successResponse({ res, message: "Email verified successfully", data: user });
+  } catch (error) {
+    next(error);
+  }
+};
+
+/**
+ * @description Function to resend account verification email
+ */
+module.exports.resendVerificationEmail = async (req, res, next) => {
+  try {
+    const { email } = req.query;
+    if (!email) {
+      return errorResponse({
+        res,
+        statusCode: 400,
+        message: `email is required`,
+      });
+    }
+
+    let user = await UserModel.findOne({ email });
+    if (!user) {
+      return errorResponse({
+        res,
+        statusCode: 400,
+        message: `User not found`,
+        error: user,
+      });
+    }
+
+    if (user && user.isVerified) {
+      return errorResponse({
+        res,
+        statusCode: 400,
+        message: `Already verified: Please login to your account`,
+        errorCode: "ALREADY_VERIFIED",
+      });
+    }
+
+    const otp = randomNumbers(4);
+    user = await UserModel.findOneAndUpdate({ email }, { otp });
+    const _accountVerificationTemplate = accountVerificationTemplate(email, otp, user.name);
+
+    const sendMailRes = await sendMail({
+      to: email,
+      subject: "Resend: Account Verification",
+      html: _accountVerificationTemplate,
+    });
+    if (sendMailRes && sendMailRes[0] === false) {
+      return next(sendMailRes[1]);
+    }
+
+    user.otp = undefined;
+    user.password = undefined;
+    return successResponse({ res, message: "Verification email resent", data: user });
   } catch (error) {
     next(error);
   }
