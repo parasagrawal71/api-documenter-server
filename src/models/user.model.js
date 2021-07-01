@@ -71,7 +71,7 @@ UserModel.methods.isValidPassword = async function (password) {
 UserModel.methods.isValidOtp = async function (otp) {
   const user = this;
   let comparision = false;
-  let info = "";
+  const info = "";
 
   if (user.isVerified) {
     return [false, "Already verified"];

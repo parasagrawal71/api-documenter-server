@@ -74,7 +74,7 @@ module.exports.handleForgotPassword = async (req, res, next) => {
     const otp = randomNumbers(4);
     user = await UserModel.findOneAndUpdate({ email }, { otp });
 
-    const _verifyEmailByOtpTemplate = verifyEmailByOtpTemplate(otp);
+    const _verifyEmailByOtpTemplate = verifyEmailByOtpTemplate(otp, user.name);
     const sendMailRes = await sendMail({ to: email, subject: "Verify Your Email", html: _verifyEmailByOtpTemplate });
     if (sendMailRes && sendMailRes[0] === false) {
       return next(sendMailRes[1]);

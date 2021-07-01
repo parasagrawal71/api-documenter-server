@@ -64,12 +64,6 @@ module.exports.accountVerificationTemplate = (email, OTP) => {
         border-bottom-right-radius: 5px;
       }
 
-      .otp {
-        font-size: 24px;
-        font-weight: bold;
-        padding-left: 30px;
-      }
-
       .verify-btn {
         background-color: #709cfd;
         padding: 10px 20px;
