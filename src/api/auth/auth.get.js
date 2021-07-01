@@ -90,8 +90,11 @@ module.exports.accountVerification = async (req, res, next) => {
       });
     }
 
-    if(user && user.isVerified) {
-      return res.render(path.join(__dirname, "../../views/verify-email-error.html"), { url: FRONTEND_URL, info: "Already verified" });      
+    if (user && user.isVerified) {
+      return res.render(path.join(__dirname, "../../views/verify-email-error.html"), {
+        url: FRONTEND_URL,
+        info: "Already verified",
+      });
     }
 
     const [validate, info] = await user.isValidOtp(otp);
