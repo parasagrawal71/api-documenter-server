@@ -6,6 +6,7 @@ const { successResponse, errorResponse } = require("../../utils/response.format"
  */
 module.exports.getServices = (req, res, next) => {
   ServiceModel.find()
+    .sort({ createdAt: -1 })
     .then((services) => {
       successResponse({ res, message: "List of services", data: services });
     })
