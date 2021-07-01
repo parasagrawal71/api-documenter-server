@@ -73,10 +73,6 @@ UserModel.methods.isValidOtp = async function (otp) {
   let comparision = false;
   const info = "";
 
-  if (user.isVerified) {
-    return [false, "Already verified"];
-  }
-
   if (otp && user.otp) {
     comparision = await bcrypt.compare(String(otp), user.otp);
     return [comparision, !comparision ? "Wrong OTP" : ""];
