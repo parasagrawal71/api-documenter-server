@@ -13,7 +13,6 @@ module.exports.getServices = (req, res, next) => {
         services &&
           services.map((service) => {
             return EndpointModel.countDocuments({ serviceMID: service._id }).then((count) => {
-              console.log("count ", count);
               return {
                 ...service._doc,
                 endpointsCount: count || 0,
@@ -21,7 +20,7 @@ module.exports.getServices = (req, res, next) => {
             });
           })
       );
-      console.log("updatedServices ", updatedServices);
+
       successResponse({ res, message: "List of services", data: updatedServices });
     })
     .catch(next);
