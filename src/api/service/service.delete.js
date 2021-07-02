@@ -4,6 +4,7 @@ const EndpointModel = require("../../models/endpoint.model");
 const EnvironmentModel = require("../../models/environment.model");
 const ReadmeModel = require("../../models/readme.model");
 const SchemaModel = require("../../models/schema.model");
+const UserModel = require("../../models/user.model");
 const { successResponse, errorResponse } = require("../../utils/response.format");
 
 /**
@@ -12,12 +13,15 @@ const { successResponse, errorResponse } = require("../../utils/response.format"
 module.exports.deleteService = async (req, res, next) => {
   const { mongoId } = req.params;
 
+  const serviceToBeDeleted = await ServiceModel.findOne({ _id: mongoId }).catch(next);
+
   await Promise.all([
     deleteApisTreeOfService(mongoId),
     deleteEndpointsOfService(mongoId),
     deleteEnvironmentsOfService(mongoId),
     deleteReadmesOfService(mongoId),
     deleteSchemasOfService(mongoId),
+    removeServiceAccessFromAllUsers(serviceToBeDeleted && serviceToBeDeleted.serviceName),
   ]);
 
   ServiceModel.findOneAndDelete({ _id: mongoId })
@@ -58,4 +62,8 @@ const deleteSchemasOfService = (serviceMID) => {
   return SchemaModel.deleteMany({ serviceMID })
     .then((response) => [true, response])
     .catch((error) => [false, error]);
+};
+
+const removeServiceAccessFromAllUsers = (serviceName) => {
+  return UserModel.updateMany({}, { $pull: { editAccess: serviceName } });
 };
