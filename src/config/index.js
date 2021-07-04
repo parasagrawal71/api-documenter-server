@@ -3,9 +3,12 @@ require("dotenv").config();
 const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
+  // DATABASE
   MONGODB_URI: process.env.MONGODB_URI,
 
+  // SECRETs
   JWT_SECRET: process.env.JWT_SECRET,
+  ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
 
   // MAILs
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,

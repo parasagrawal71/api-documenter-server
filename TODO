@@ -1,22 +1,19 @@
 
 [PRESENT]
+- [FEATURE] Deployment on firebase
+- [FEATURE] Copy to clipboard option for request and response bodies
+- [IMPROVEMENT] in backend email templates, use a variable for APP_NAME, same for frontend
 - [BUG] assign edit access menu is flickering on selecting options from it
 - [IMRPROVEMENT] Make "read env variable" dynamic for any number of variables
 - [BUG] Two actions popup opening at same time on clicking two more icons
 - [FEATURE] Other type of request body like form data etc
-- [FEATURE] Pre-Populate all possible header values etc- Add request option in APIs subheader ??????
 - [BUG] Request is going to localhost instead of env host_url
-- [BUG] Textfieldpopup holding old values
 - [BUG] Tab not working in request body textarea
 - [BUG] On send request dropdown arrow, outline not going after saving example
-- [IMPROVEMENT] CHECK FORM VALIDATION IN ENDPOINT SECTION AND ALL OTHER PAGES EXCEPT LOGIN (change iserror to error)
 - [IMPROVEMENT] Loaders on every page, login btns
-- [BUG] "Session expired" popup and logout if token expires
 - [BUG] toast is stucking
 - [FEATURE] favicon
-- [IMPROVEMENT] in backend email templates, use a variable for APP_NAME
 - [FEATURE] Decide Logo and app name for project
-- If provider is google, call logout google api?
 
 
 
@@ -28,11 +25,11 @@ FRONTEND
 - [FEATURE] Search box for Table of contents
 - [FEATURE] Comment box whenever any api is updated
 - [FEATURE] Health check status can be shown in the dashboard for services
-- [FEATURE] Copy to clipboard option
 - [FEATURE] When hitting send api request, show a animation where request goes to server from client and later client receives it
 - [FEATURE] Drag files functionality in apis tree sidebar
 - [FEATURE] edit names or method functionality in apis tree sidebar
 - [FEATURE] To set as environment variable in the selected env or all env?
+- [IMPROVEMENT] If provider is google, call logout google api?
 
 BACKEND
 - [FEATURE] locks on apis
@@ -45,4 +42,5 @@ BACKEND
 - [FEATURE] message service: common message from one place (Body can't be empty)
 - [FEATURE] test cases for each apis in backend and automation testing
 - [IMPROVEMENT] Rename apisTree to folder in backend
+- [FEATURE] API to refresh token (For now, no check of expiry time)
 
