@@ -12,6 +12,7 @@ const { logIncomingRequests } = require("./utils/log-requests");
 const { errorResponse } = require("./utils/response.format");
 const { getHttpMessage } = require("./utils/http-constants");
 const { connectDatabase } = require("./utils/db.connect");
+const { APP_NAME } = require("./config");
 require("./utils/app-logger");
 require("./middlewares/passport");
 
@@ -71,7 +72,7 @@ app.get("/health", logIncomingRequests, (req, res) => {
 });
 
 app.get("/", logIncomingRequests, (req, res) => {
-  res.send("Welcome to API Documenter API Server!");
+  res.send(`Welcome to ${APP_NAME} Server!`);
 });
 
 app.all("/*", (req, res) => {
@@ -110,6 +111,6 @@ process.on("SIGTERM", signalProcessCallback);
 
 app.on("ready", () => {
   app.listen(PORT, () => {
-    appLogger.debug(`API Documenter Server is running on ${PORT}`);
+    appLogger.debug(`${APP_NAME} Server is running on ${PORT}`);
   });
 });

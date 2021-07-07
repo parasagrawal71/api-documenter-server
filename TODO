@@ -2,7 +2,6 @@
 [PRESENT]
 - [FEATURE] Deployment on firebase
 - [FEATURE] Copy to clipboard option for request and response bodies
-- [IMPROVEMENT] in backend email templates, use a variable for APP_NAME, same for frontend
 - [BUG] assign edit access menu is flickering on selecting options from it
 - [IMRPROVEMENT] Make "read env variable" dynamic for any number of variables
 - [BUG] Two actions popup opening at same time on clicking two more icons
@@ -19,6 +18,7 @@
 
 [LATER]
 FRONTEND
+- [FEATURE] To copy current token in env variable
 - [FEATURE] Testcases functionality
 - [FEATURE] LOGIN with mobile otp
 - [FEATURE] Nested fields support in model component

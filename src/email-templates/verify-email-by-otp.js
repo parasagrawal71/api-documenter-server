@@ -1,3 +1,5 @@
+const { APP_NAME } = require("../config");
+
 module.exports.verifyEmailByOtpTemplate = (OTP, name) => {
   return `<html lang="en">
   <head>
@@ -102,7 +104,7 @@ module.exports.verifyEmailByOtpTemplate = (OTP, name) => {
         <td>
           <table class="header-table">
             <tr>
-              <td>API Documenter</td>
+              <td>${APP_NAME}</td>
             </tr>
           </table>
         </td>

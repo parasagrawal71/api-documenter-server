@@ -1,4 +1,4 @@
-const { HOST_URL } = require("../config");
+const { HOST_URL, APP_NAME } = require("../config");
 
 module.exports.accountVerificationTemplate = (email, OTP, name) => {
   return `<html lang="en">
@@ -98,7 +98,7 @@ module.exports.accountVerificationTemplate = (email, OTP, name) => {
         <td>
           <table class="header-table">
             <tr>
-              <td>API Documenter</td>
+              <td>${APP_NAME}</td>
             </tr>
           </table>
         </td>
@@ -120,7 +120,7 @@ module.exports.accountVerificationTemplate = (email, OTP, name) => {
             </tr>
             <tr>
               <td class="rowPadding5px">
-                Thank you for registering on API Documenter portal.
+                Thank you for registering on ${APP_NAME} portal.
               </td>
             </tr>
             <tr>
