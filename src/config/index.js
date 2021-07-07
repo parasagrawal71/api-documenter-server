@@ -19,7 +19,7 @@ module.exports = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 
   // URLs
-  FRONTEND_URL: isProduction ? "" : "http://localhost:4000/dashboard",
+  FRONTEND_URL: isProduction ? "https://api-documenter.web.app/dashboard" : "http://localhost:4000/dashboard",
   HOST_URL: isProduction ? "https://api-documenter-server.herokuapp.com/api/v1" : "http://localhost:5001/api/v1",
 
   // NAMEs
