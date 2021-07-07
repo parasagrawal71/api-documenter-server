@@ -16,11 +16,14 @@ const fieldSchema = new Schema(
 );
 
 // MAIN SCHEMA
-const SchemaModel = new Schema({
-  fileName: { type: String, required: true, unique: true },
-  fields: [fieldSchema],
-  serviceMID: { type: String, required: true },
-});
+const SchemaModel = new Schema(
+  {
+    fileName: { type: String, required: true, unique: true },
+    fields: [fieldSchema],
+    serviceMID: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 SchemaModel.pre("findOneAndUpdate", function (next) {
   this.options.runValidators = true;

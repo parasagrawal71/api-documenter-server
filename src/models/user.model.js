@@ -3,13 +3,32 @@ const bcrypt = require("bcrypt");
 
 const { Schema } = mongoose;
 
+// SUB-SCHEMAS
+// const editAccessSchema = new Schema(
+//   {
+//     serviceName: { type: String, required: true },
+//     serviceMID: { type: String, required: true },
+//   },
+//   { _id: false, id: false, toJSON: { virtuals: true } }
+// );
+
+// editAccessSchema.virtual("_id").get(function () {
+//   return this.serviceMID;
+// });
+
 // MAIN SCHEMA
-const UserModel = new Schema({
-  email: { type: String, required: true, unique: true },
-  password: { type: String },
-  isVerified: { type: Boolean, default: false },
-  otp: { type: String },
-});
+const UserModel = new Schema(
+  {
+    name: { type: String },
+    email: { type: String, required: true, unique: true },
+    password: { type: String },
+    isVerified: { type: Boolean, default: false },
+    otp: { type: String },
+    superuser: { type: Boolean, default: false },
+    editAccess: [{ type: String }],
+  },
+  { timestamps: true }
+);
 
 UserModel.pre("findOneAndUpdate", async function (next) {
   this.options.runValidators = true;
@@ -51,9 +70,15 @@ UserModel.methods.isValidPassword = async function (password) {
 
 UserModel.methods.isValidOtp = async function (otp) {
   const user = this;
-  const comparision = await bcrypt.compare(String(otp), user.otp);
+  let comparision = false;
+  const info = "";
 
-  return comparision;
+  if (otp && user.otp) {
+    comparision = await bcrypt.compare(String(otp), user.otp);
+    return [comparision, !comparision ? "Wrong OTP" : ""];
+  }
+
+  return [comparision, info];
 };
 
 module.exports = mongoose.model("User", UserModel, "users");

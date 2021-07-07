@@ -1,11 +1,46 @@
-- message service: common message from one place (Body can't be empty)
-- uiMessage field in response format
-- [LATER] test cases for each api and automation testing
-- Implement redis for anything to learn the concept and usage
-- Run memory leak / performance metrics weakly. Generate report / Log
-- rollback methods
-- locks on apis
-- Push logs to elastic search
-- Socket push
-- RENAME apisTree
-- Verify email redirect html page
+
+[PRESENT]
+- [FEATURE] Deployment on firebase
+- [FEATURE] Copy to clipboard option for request and response bodies
+- [BUG] assign edit access menu is flickering on selecting options from it
+- [IMRPROVEMENT] Make "read env variable" dynamic for any number of variables
+- [BUG] Two actions popup opening at same time on clicking two more icons
+- [FEATURE] Other type of request body like form data etc
+- [BUG] Request is going to localhost instead of env host_url
+- [BUG] Tab not working in request body textarea
+- [BUG] On send request dropdown arrow, outline not going after saving example
+- [IMPROVEMENT] Loaders on every page, login btns
+- [BUG] toast is stucking
+- [FEATURE] favicon
+- [FEATURE] Decide Logo and app name for project
+
+
+
+[LATER]
+FRONTEND
+- [FEATURE] To copy current token in env variable
+- [FEATURE] Testcases functionality
+- [FEATURE] LOGIN with mobile otp
+- [FEATURE] Nested fields support in model component
+- [FEATURE] Search box for Table of contents
+- [FEATURE] Comment box whenever any api is updated
+- [FEATURE] Health check status can be shown in the dashboard for services
+- [FEATURE] When hitting send api request, show a animation where request goes to server from client and later client receives it
+- [FEATURE] Drag files functionality in apis tree sidebar
+- [FEATURE] edit names or method functionality in apis tree sidebar
+- [FEATURE] To set as environment variable in the selected env or all env?
+- [IMPROVEMENT] If provider is google, call logout google api?
+
+BACKEND
+- [FEATURE] locks on apis
+- [FEATURE] Run memory leak / performance metrics weakly. Generate report / Log
+- [FEATURE] rollback methods
+- [FEATURE] Push logs to elastic search
+- [FEATURE] Socket push
+- [FEATURE] uiMessage field in response format
+- [FEATURE] Implement redis for anything to learn the concept and usage
+- [FEATURE] message service: common message from one place (Body can't be empty)
+- [FEATURE] test cases for each apis in backend and automation testing
+- [IMPROVEMENT] Rename apisTree to folder in backend
+- [FEATURE] API to refresh token (For now, no check of expiry time)
+

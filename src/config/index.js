@@ -3,9 +3,12 @@ require("dotenv").config();
 const isProduction = process.env.NODE_ENV === "production";
 
 module.exports = {
+  // DATABASE
   MONGODB_URI: process.env.MONGODB_URI,
 
+  // SECRETs
   JWT_SECRET: process.env.JWT_SECRET,
+  ENCRYPTION_KEY: process.env.ENCRYPTION_KEY,
 
   // MAILs
   SENDGRID_API_KEY: process.env.SENDGRID_API_KEY,
@@ -16,5 +19,9 @@ module.exports = {
   GOOGLE_CLIENT_SECRET: process.env.GOOGLE_CLIENT_SECRET,
 
   // URLs
+  FRONTEND_URL: isProduction ? "https://api-documenter.web.app/dashboard" : "http://localhost:4000/dashboard",
   HOST_URL: isProduction ? "https://api-documenter-server.herokuapp.com/api/v1" : "http://localhost:5001/api/v1",
+
+  // NAMEs
+  APP_NAME: "API Documenter",
 };

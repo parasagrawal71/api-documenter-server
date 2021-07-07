@@ -21,12 +21,15 @@ const SubOrderSchema = new Schema(
 );
 
 // MAIN SCHEMA
-const ApisTreeModel = new Schema({
-  folderName: { type: String, required: true, unique: true },
-  subfolders: [SubOrderSchema],
-  files: [FilesSchema],
-  serviceMID: { type: String, required: true },
-});
+const ApisTreeModel = new Schema(
+  {
+    folderName: { type: String, required: true, unique: true },
+    subfolders: [SubOrderSchema],
+    files: [FilesSchema],
+    serviceMID: { type: String, required: true },
+  },
+  { timestamps: true }
+);
 
 ApisTreeModel.pre("findOneAndUpdate", function (next) {
   this.options.runValidators = true;

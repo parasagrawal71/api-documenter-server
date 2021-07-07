@@ -1,10 +1,10 @@
 const passport = require("passport");
 const { OAuth2Client } = require("google-auth-library");
+const path = require("path");
 const { successResponse, errorResponse } = require("../../utils/response.format");
-const { GOOGLE_CLIENT_ID } = require("../../config");
+const { GOOGLE_CLIENT_ID, FRONTEND_URL, APP_NAME } = require("../../config");
 const UserModel = require("../../models/user.model");
 const { signJwtToken } = require("./_helpers");
-const path = require("path");
 
 const googleClient = new OAuth2Client(GOOGLE_CLIENT_ID);
 
@@ -27,7 +27,7 @@ module.exports.login = (req, res, next) => {
         if (error) return next(error);
 
         const [token, expiry] = signJwtToken(user);
-        return successResponse({ res, message: "Logged in successfully", data: { token, expiry } });
+        return successResponse({ res, message: "Logged in successfully", data: { token, expiry, user } });
       });
     } catch (error) {
       return next(error);
@@ -52,7 +52,7 @@ module.exports.googleLogin = async (req, res, next) => {
 
       let user = await UserModel.findOne({ email });
       if (!user) {
-        user = await UserModel.create({ email, isVerified: true });
+        user = await UserModel.create({ email, name, isVerified: true });
       }
 
       user.password = undefined;
@@ -67,9 +67,9 @@ module.exports.googleLogin = async (req, res, next) => {
 };
 
 /**
- * @description Function to verify email address by otp sent
+ * @description Function to verify new account by pressing verify button on email sent
  */
-module.exports.verifyEmailAdress = async (req, res, next) => {
+module.exports.accountVerification = async (req, res, next) => {
   try {
     const { email, otp } = req.query;
     if (!email || !otp) {
@@ -85,21 +85,35 @@ module.exports.verifyEmailAdress = async (req, res, next) => {
       return errorResponse({
         res,
         statusCode: 400,
-        message: `Email verification failed: User not found`,
+        message: `Account verification failed: User not found`,
         error: user,
       });
     }
 
-    const validate = await user.isValidOtp(otp);
+    if (user && user.isVerified) {
+      return res.render(path.join(__dirname, "../../views/verify-email-error.html"), {
+        url: FRONTEND_URL,
+        info: "Already verified",
+        appName: APP_NAME,
+      });
+    }
+
+    const [validate, info] = await user.isValidOtp(otp);
     if (!validate) {
-      return res.sendFile(path.join(__dirname, "../../views/verify-email-error.html"));
-      // return errorResponse({ res, statusCode: 400, message: `Email verification failed: Wrong OTP`, error: validate });
+      return res.render(path.join(__dirname, "../../views/verify-email-error.html"), {
+        url: FRONTEND_URL,
+        info,
+        appName: APP_NAME,
+      });
     }
 
     user = await UserModel.findOneAndUpdate({ email }, { $unset: { otp: 1 }, $set: { isVerified: true } });
     user.password = undefined;
-    return res.sendFile(path.join(__dirname, "../../views/verify-email-success.html"));
-    // return successResponse({ res, message: "Email verified successfully", data: user });
+    return res.render(path.join(__dirname, "../../views/verify-email-success.html"), {
+      url: FRONTEND_URL,
+      info: "Thank you for verifying your email address",
+      appName: APP_NAME,
+    });
   } catch (error) {
     next(error);
   }

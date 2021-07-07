@@ -3,25 +3,55 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Email Verification</title>
+    <title>Account Verification</title>
 
     <style>
+      html {
+        background-color: rgba(76, 82, 100, 0.9);
+      }
+
+      body {
+        font-family: Arial, Helvetica, sans-serif;
+      }
+
       table.main-table {
-        width: fit-content;
+        margin: 100px auto;
+        min-width: 500px;
+      }
+
+      table.header-table {
+        width: 100%;
         border-collapse: separate;
         border-spacing: 40px 16px;
-        margin: 100px auto;
-        background-color: #f0f0f0;
+        color: #fff;
         border-radius: 5px;
+        text-align: center;
       }
 
-      .otp {
-        font-size: 24px;
-        font-weight: bold;
-        padding-left: 30px;
+      table.content-table {
+        width: 100%;
+        border-collapse: separate;
+        border-spacing: 40px 16px;
+        background-color: #f0f0f0;
+        background-color: #f5f8fa;
+        border: 1px solid lightgrey;
+        font-size: 16px;
+        border-radius: 2px;
       }
 
-      .verify-btn {
+      .emailVerified {
+        padding: 10px 0 0 0;
+        font-size: 25px;
+        text-align: center;
+      }
+
+      .info {
+        padding: 0 0 10px 0;
+        font-size: 15px;
+        text-align: center;
+      }
+
+      .goToWebsite {
         background-color: #709cfd;
         padding: 10px 20px;
         outline: none;
@@ -38,14 +68,32 @@
     </style>
   </head>
   <body>
-    <table class="main-table">
+    <table class="main-table" cellpadding="0" cellspacing="0">
       <tr>
-        <td>Email Verification Failed</td>
-      </tr>
-        <td></td>
+        <td>
+          <table class="header-table">
+            <tr>
+              <td><%= appName %></td>
+            </tr>
+          </table>
+        </td>
       </tr>
       <tr>
-        <td>Thanks!</td>
+        <td>
+          <table class="content-table">
+            <tr>
+              <td class="emailVerified">Email Verification Failed</td>
+            </tr>
+            <tr>
+              <td class="info">&#9432; <%= info %></td>
+            </tr>
+            <tr>
+              <td class="textAlign" style="padding: 15px 0 25px 0">
+                <a class="goToWebsite" href="<%= url %>">Go to website</a>
+              </td>
+            </tr>
+          </table>
+        </td>
       </tr>
     </table>
   </body>

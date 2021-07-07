@@ -5,12 +5,14 @@ const moment = require("moment");
 const chalk = require("chalk");
 const rTracer = require("cls-rtracer");
 const helmet = require("helmet");
+const path = require("path");
 
 const apiRouter = require("./api/api.router");
 const { logIncomingRequests } = require("./utils/log-requests");
 const { errorResponse } = require("./utils/response.format");
 const { getHttpMessage } = require("./utils/http-constants");
 const { connectDatabase } = require("./utils/db.connect");
+const { APP_NAME } = require("./config");
 require("./utils/app-logger");
 require("./middlewares/passport");
 
@@ -31,6 +33,8 @@ app.use(
 );
 app.use(rTracer.expressMiddleware());
 app.use(helmet());
+app.set("view engine", "html");
+app.engine("html", require("ejs").renderFile);
 // app.use(
 //   morgan(function (tokens, req, res) {
 //     let statusCode = tokens.status(req, res);
@@ -68,7 +72,7 @@ app.get("/health", logIncomingRequests, (req, res) => {
 });
 
 app.get("/", logIncomingRequests, (req, res) => {
-  res.send("Welcome to API Documenter API Server!");
+  res.send(`Welcome to ${APP_NAME} Server!`);
 });
 
 app.all("/*", (req, res) => {
@@ -107,6 +111,6 @@ process.on("SIGTERM", signalProcessCallback);
 
 app.on("ready", () => {
   app.listen(PORT, () => {
-    appLogger.debug(`API Documenter Server is running on ${PORT}`);
+    appLogger.debug(`${APP_NAME} Server is running on ${PORT}`);
   });
 });

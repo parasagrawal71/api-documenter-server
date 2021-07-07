@@ -3,9 +3,12 @@ const mongoose = require("mongoose");
 const { Schema } = mongoose;
 
 // MAIN SCHEMA
-const ServiceModel = new Schema({
-  serviceName: { type: String, required: true, unique: true },
-});
+const ServiceModel = new Schema(
+  {
+    serviceName: { type: String, required: true, unique: true },
+  },
+  { timestamps: true }
+);
 
 ServiceModel.pre("findOneAndUpdate", function (next) {
   this.options.runValidators = true;

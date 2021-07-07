@@ -20,13 +20,13 @@ module.exports.authenticateRequests = async (req, res, next) => {
       return errorResponse({ res, statusCode: 401, message: "Authentication failed: Token is malformed!" });
     }
 
-    if (decoded && decoded.exp) {
-      if (decoded.iss === "accounts.google.com" && moment(decoded.exp * 1000).isBefore()) {
-        return errorResponse({ res, statusCode: 401, message: "Authentication failed: Token expired" });
-      } else if (decoded.iss === "api-documenter.com" && moment(decoded.exp).isBefore()) {
-        return errorResponse({ res, statusCode: 401, message: "Authentication failed: Token expired" });
-      }
-    }
+    // if (decoded && decoded.exp) {
+    //   if (decoded.iss === "accounts.google.com" && moment(decoded.exp * 1000).isBefore()) {
+    //     return errorResponse({ res, statusCode: 401, message: "Authentication failed: Token expired" });
+    //   } else if (decoded.iss === "api-documenter.com" && moment(decoded.exp).isBefore()) {
+    //     return errorResponse({ res, statusCode: 401, message: "Authentication failed: Token expired" });
+    //   }
+    // }
 
     const user = await UserModel.findOne({ email: decoded.email });
     if (!user) {
@@ -37,6 +37,7 @@ module.exports.authenticateRequests = async (req, res, next) => {
       return errorResponse({ res, statusCode: 401, message: "Authentication failed: User not verified" });
     }
 
+    req.loggedInUser = user;
     next();
   } catch (error) {
     next(error);
