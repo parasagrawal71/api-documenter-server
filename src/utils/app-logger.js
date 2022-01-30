@@ -119,7 +119,7 @@ const commonLogFormat = (log, isConsoleLog) => {
       firstLineOfDBLog = `${firstHalfOfFirstLineOfLog}${" ".repeat(isInfoOrWarnLevel ? 4 : 3)}: ${msg}`;
     }
     const objOrArrInDBLog =
-      !isEmptyObject(errorOrInfo) || !isEmptyArray(isEmptyObject)
+      !isEmptyObject(errorOrInfo) || !isEmptyArray(errorOrInfo)
         ? `\n\t***${isErrorLevel ? "ERROR" : "INFO"}***\t========>\t${deepObject(errorOrInfo)}`
         : "";
 
