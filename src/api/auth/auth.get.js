@@ -52,7 +52,8 @@ module.exports.googleLogin = async (req, res, next) => {
 
       let user = await UserModel.findOne({ email });
       if (!user) {
-        user = await UserModel.create({ email, name, isVerified: true });
+        const editAccess = ["JSON Placeholder"];
+        user = await UserModel.create({ email, name, isVerified: true, editAccess });
       }
 
       user.password = undefined;
