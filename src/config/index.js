@@ -20,7 +20,7 @@ module.exports = {
 
   // URLs
   FRONTEND_URL: isProduction ? "https://api-documenter.web.app/dashboard" : "http://localhost:4000/dashboard",
-  HOST_URL: isProduction ? "https://api-documenter-server.herokuapp.com/api/v1" : "http://localhost:5001/api/v1",
+  HOST_URL: isProduction ? "https://api-documenter-server.up.railway.app/api/v1" : "http://localhost:5001/api/v1",
 
   // NAMEs
   APP_NAME: "API Documenter",
