@@ -7,9 +7,9 @@ const { successResponse, errorResponse } = require("../../utils/response.format"
  */
 module.exports.updateService = async (req, res, next) => {
   const { mongoId } = req.params;
-  
-  if(mongoId === "62920390b3931700682e2fc7") {
-        return errorResponse({ res, statusCode: 400, message: `This is an example service and cannot be updated` });
+
+  if (mongoId === "62920390b3931700682e2fc7") {
+    return errorResponse({ res, statusCode: 400, message: `This is an example service and cannot be updated` });
   }
 
   const serviceToBeUpdated = await ServiceModel.findOne({ _id: mongoId }).catch(next);
