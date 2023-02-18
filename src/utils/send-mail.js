@@ -15,9 +15,11 @@ module.exports.sendMail = ({ from = DEFAULT_SENDER, to, subject, text, html }) =
   return sgMail
     .send(msg)
     .then((response) => {
+      appLogger.info({ msg: `sendMail: response `, info: response });
       return [true, response];
     })
     .catch((error) => {
+      appLogger.error({ msg: `sendMail: error `, error });
       return [false, error];
     });
 };
