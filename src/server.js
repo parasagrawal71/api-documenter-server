@@ -13,6 +13,7 @@ const { errorResponse } = require("./utils/response.format");
 const { getHttpMessage } = require("./utils/http-constants");
 const { connectDatabase } = require("./utils/db.connect");
 const { APP_NAME } = require("./config");
+const keepActive = require("./utils/keepActive");
 require("./utils/app-logger");
 require("./middlewares/passport");
 
@@ -98,6 +99,7 @@ process.on("unhandledRejection", (promise, reason) => {
 
 process.on("uncaughtException", (error, origin) => {
   appLogger.error("------------------------ uncaughtException Error -----------------------");
+  console.log(`error: `, error);
   appLogger.error({ msg: `uncaughtException error @ ${origin}`, error });
   appLogger.error("------------------------------------------------------------------------");
 });
@@ -114,3 +116,5 @@ app.on("ready", () => {
     appLogger.debug(`${APP_NAME} Server is running on ${PORT}`);
   });
 });
+
+keepActive();
