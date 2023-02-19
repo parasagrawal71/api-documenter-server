@@ -1,6 +1,6 @@
+const schedule = require("node-schedule");
 const UserModel = require("../models/user.model");
 const { sendMail } = require("./send-mail");
-const schedule = require("node-schedule");
 
 const keepActive = async function () {
   try {
