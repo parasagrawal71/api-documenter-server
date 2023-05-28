@@ -6,8 +6,8 @@
   "author": "Paras Agrawal",
   "license": "MIT",
   "scripts": {
-    "start": "npm run watch:dev",
-    "start-prod": "npm run prod",
+    "start:dev": "npm run watch:dev",
+    "start": "npm run prod",
     "lint": "eslint ./ --fix",
     "lint-file": "eslint $npm_config_filepath --fix",
     "transpile": "babel ./src --out-dir dist-src --copy-files",
