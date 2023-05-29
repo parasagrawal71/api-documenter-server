@@ -1,0 +1,24 @@
+version: "3.4"
+services:
+  api-documenter-server:
+    container_name: api-documenter-server
+    image: api-documenter-server:1.0.0
+    restart: always
+    env_file: ./.env.development
+    ports:
+      - "5001:5001"
+
+  # mongo_cont:
+  #   container_name: mongo_cont
+  #   image: mongo:6.0.5
+  #   restart: always
+  #   environment:
+  #     MONGO_INITDB_ROOT_USERNAME: admin
+  #     MONGO_INITDB_ROOT_PASSWORD: password
+  #     MONGO_INITDB_DATABASE: api-documenter
+  #   ports:
+  #     - "27017:27001"
+  #   volumes:
+  #     # - ./mongo/data:/data/db
+  #     - ./mongo/mongo.conf:/etc/mongo.conf
+  #   command: ["mongod", "-f", "/etc/mongo.conf"]
