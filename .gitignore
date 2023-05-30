@@ -10,4 +10,7 @@ yarn.lock
 /dist-src
 /logs
 .env
+.env.production
+.env.development
+mongo
 # .vscode

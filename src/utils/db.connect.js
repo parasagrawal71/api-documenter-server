@@ -10,7 +10,7 @@ module.exports.connectDatabase = (expressApp) => {
       useFindAndModify: false,
     })
     .then(() => {
-      appLogger.debug("Successfully connected to the database");
+      appLogger.debug(`Successfully connected to the database ${MONGODB_URI}`);
       expressApp.emit("ready");
     })
     .catch((error) => {
