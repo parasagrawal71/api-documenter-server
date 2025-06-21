@@ -16,6 +16,7 @@ const { APP_NAME } = require("./config");
 const keepActive = require("./utils/keepActive");
 require("./utils/app-logger");
 require("./middlewares/passport");
+const redis = require("./utils/redis");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -68,7 +69,9 @@ app.engine("html", require("ejs").renderFile);
  */
 app.use("/api/v1", logIncomingRequests, apiRouter);
 
-app.get("/health", logIncomingRequests, (req, res) => {
+app.get("/health", logIncomingRequests, async (req, res) => {
+  // await redis.setValue("health", "active");
+  // console.log(await redis.getValue("health"));
   res.send("Active");
 });
 
