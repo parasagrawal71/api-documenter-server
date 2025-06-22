@@ -6,6 +6,7 @@ const chalk = require("chalk");
 const rTracer = require("cls-rtracer");
 const helmet = require("helmet");
 const path = require("path");
+const { sdk } = require("./telemetry"); // ✅ must come FIRST
 
 const apiRouter = require("./api/api.router");
 const { logIncomingRequests } = require("./utils/log-requests");
@@ -17,6 +18,7 @@ const keepActive = require("./utils/keepActive");
 require("./utils/app-logger");
 require("./middlewares/passport");
 const redis = require("./utils/redis");
+// const { observeThisApiCall } = require("./telemetry");
 
 const app = express();
 const PORT = process.env.PORT || 5001;
@@ -79,6 +81,13 @@ app.get("/", logIncomingRequests, (req, res) => {
   res.send(`Welcome to ${APP_NAME} Server!`);
 });
 
+app.get("/heavy-task", logIncomingRequests, async (req, res) => {
+  await new Promise((resolve) => setTimeout(resolve, 6000));
+  res.send("Heavy task completed!");
+});
+
+// app.get("/observe", logIncomingRequests, observeThisApiCall);
+
 app.all("/*", (req, res) => {
   errorResponse({ res, statusCode: 404, message: `Can't find ${req.method} ${req.originalUrl} on the server!` });
 });
@@ -114,10 +123,13 @@ function signalProcessCallback(signal) {
 process.on("SIGINT", signalProcessCallback);
 process.on("SIGTERM", signalProcessCallback);
 
-app.on("ready", () => {
-  app.listen(PORT, () => {
-    appLogger.debug(`${APP_NAME} Server is running on ${PORT}`);
+(async () => {
+  await sdk.start(); // await Initialize Telemetry
+  app.on("ready", () => {
+    app.listen(PORT, () => {
+      appLogger.debug(`${APP_NAME} Server is running on ${PORT}`);
+    });
   });
-});
+})();
 
 keepActive();
