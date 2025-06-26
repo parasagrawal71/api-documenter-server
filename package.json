@@ -16,7 +16,8 @@
     "build": "npm run clean && npm run transpile",
     "dev": "NODE_ENV=development npm run build && npm run serve",
     "prod": "NODE_ENV=production npm run build && npm run serve",
-    "watch:dev": "nodemon"
+    "watch:dev": "nodemon",
+    "test": "jest"
   },
   "dependencies": {
     "@babel/cli": "^7.14.3",
@@ -74,6 +75,9 @@
       "pre-commit": "npm run lint"
     }
   },
+  "jest": {
+    "testEnvironment": "node"
+  },
   "devDependencies": {
     "eslint": "6.8.0",
     "eslint-config-airbnb": "18.1.0",
@@ -84,6 +88,7 @@
     "eslint-plugin-react": "7.19.0",
     "eslint-plugin-react-hooks": "2.5.0",
     "husky": "^4.2.5",
+    "jest": "26.6.3",
     "prettier": "^2.0.5"
   }
 }

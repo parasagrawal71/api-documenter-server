@@ -38,5 +38,13 @@
     "react/jsx-props-no-spreading": "off",
     "no-underscore-dangle": "off",
     "camelcase": "off"
-  }
+  },
+  "overrides": [
+    {
+      "files": ["**/__tests__/**/*.js", "**/*.test.js"],
+      "env": {
+        "jest": true
+      }
+    }
+  ]
 }
